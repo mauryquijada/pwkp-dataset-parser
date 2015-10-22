@@ -1,6 +1,7 @@
 import argparse
 
-def parse_pwkp_file(pwkp_source_file, complex_sentences_file):
+def parse_pwkp_file(pwkp_source_file, complex_sentences_file,
+	simple_sentences_file):
 	translations = []
 
 	"""
@@ -33,6 +34,9 @@ def parse_pwkp_file(pwkp_source_file, complex_sentences_file):
 	with open(complex_sentences_file, "w") as pwkp_source:
 		pwkp_source.writelines("%s\n" % l for l, _ in translations)
 
+	with open(simple_sentences_file, "w") as pwkp_source:
+		pwkp_source.writelines("%s\n" % l for _, l in translations)
+
 
 
 if __name__ == "__main__":
@@ -43,6 +47,9 @@ if __name__ == "__main__":
 		"sentence pair dataset file.")
 	parser.add_argument("complex_sentences_file",  help="The filename to " +
 		"write all complex sentences to, each separated by a newline.")
+	parser.add_argument("simple_sentences_file",  help="The filename to " +
+		"write all simple translations to, each separated by a newline.")
 
 	args = parser.parse_args()
-	parse_pwkp_file(args.pwkp_source_file, args.complex_sentences_file)
+	parse_pwkp_file(args.pwkp_source_file, args.complex_sentences_file,
+		args.simple_sentences_file)
